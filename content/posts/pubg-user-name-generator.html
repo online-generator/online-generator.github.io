@@ -1,0 +1,41 @@
+---
+title: "pubG user name generator"
+slug: "pubg-user-name-generator"
+description: "pubG user name generator"
+date: "2024-08-19T12:08:12+00:00"
+tags: [generator]
+---
+
+<div class="container">
+<div class="row"><!-- if prompt is visible, then change d-none to d-none1 -->
+<div class="prompt-area d-none1"><!--Prompt--><textarea class="prompt-textarea" id="prompt" placeholder="Enter your prompt">give few pubg user names.</textarea>
+<div id="char-count">0/500</div>
+</div>
+</div>
+<!--Need not thouch this button -->
+
+<div class="row">
+<div class="col-md-12 text-center"><button class="btn btn-primary btn-lg btn-generate" id="generate">Generate</button></div>
+</div>
+<!-- Pre generated Response 1 -->
+
+<div class="row mt-3" id="response-1">some initial response</div>
+<!-- Pre generated Response 2 -->
+
+<div class="row mt-3 d-none" id="response-2">response 2 after clicking "Generate button".</div>
+
+<div class="row">
+<div class="col-md-12 text-center"><button class="btn btn-primary btn-lg d-none btn-generate" id="generate-again">Generate Again</button><!--button id="generate-more" class="btn btn-primary btn-lg d-none">Generate More</button--><button class="btn btn-primary btn-lg d-none btn-generate" id="generate-more">Generate More</button><!--div id="loading-indicator" class="d-none">
+					<div class="spinner-border text-primary" role="status">
+					  <span class="visually-hidden">Loading...</span>
+					</div>
+				</div--></div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/showdown@latest/dist/showdown.min.js"></script><!-- Import @google/generative-ai, as shown above. --><script type="importmap">
+  {
+    "imports": {
+      "@google/generative-ai": "https://esm.run/@google/generative-ai"
+    }
+  }
+</script><script type="module" src="/generators/script_v1.js"></script>

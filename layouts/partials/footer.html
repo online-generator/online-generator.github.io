@@ -1,0 +1,203 @@
+{{ if eq .Type "page" }}
+{{ partial "page_meta.html" . }}
+{{ end }}
+
+
+<footer>
+
+  <div class="container">
+  
+  
+   <div class="row">
+	
+        <div class="col-md-12">
+                           
+		 <!-- layouts/partials/nav.html -->
+         {{ partial "styled_title.html" . }}
+
+          <nav class="col">
+			<ul class="list-unstyled">
+			  {{ range $index, $item := .Site.Menus.footer.ByWeight }}
+				<li class="d-inline-block">
+				  <a href="{{ $item.URL }}" style="font-size: 16px;">{{ $item.Name }}</a>
+				  {{ if ne $index (sub (len $.Site.Menus.footer.ByWeight) 1) }}
+					<span class="text-muted mx-2">|</span>
+				  {{ end }}
+				</li>
+			  {{ end }}
+			</ul>
+		  </nav>
+		  
+        </div>
+    </div>
+	
+	
+    <div class="row">
+      <div class="col-md-12">
+        <ul
+          class="list-inline list-group list-group-horizontal text-center footer-links d-flex justify-content-center flex-row">
+
+          {{ range .Site.Data.lightbi.social.social_icons }}
+          {{- if isset $.Site.Author .id }}
+          <li>
+            <a href="{{ printf .url (index $.Site.Author .id) }}" title="{{ .title }}" target="_blank">
+              <span class="mx-2">
+                <i class="{{ .icon }}"></i>
+              </span>
+            </a>
+          </li>
+          {{- end -}}
+          {{ end }}
+          {{ if .Site.Params.rss }}
+		  <li class="gg-cast"></li>
+          <li>
+            <a href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" title="RSS" >
+              <span class="mx-2">
+                <i class="bi bi-rss">RSS</i>
+              </span>
+            </a>
+          </li>
+          {{ end }}
+		  |
+		  <li>
+            <a href="{{ .Sitemap.Filename | default "sitemap.xml" | absURL }}" title="SiteMap">
+              <span class="mx-2">
+                <i class="bi bi-rss">SiteMap</i>
+              </span>
+            </a>
+          </li>
+		  |
+		  <!--li>
+		    <a href="{{ "" | absLangURL }}sitemaps" title="HTML SiteMaps">
+            
+              <span class="mx-2">
+                <i class="bi bi-rss">HTML SiteMaps</i>
+              </span>
+            </a>
+          </li-->
+		  
+		  
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p class="credits copyright text-muted">
+          {{ if .Site.Author.name }}
+          {{ if .Site.Author.website }}
+          <a href="{{ .Site.Author.website }}">{{ .Site.Author.name }}</a>
+          {{ else }}
+          {{ .Site.Author.name }}
+          {{ end }}
+          {{ end }}
+
+          &nbsp;&bull;&nbsp;&copy;
+          {{ if .Site.Params.since }}
+          {{ .Site.Params.since }} - {{ .Site.LastChange.Format "2006" }}
+          {{ else }}
+          {{ .Site.LastChange.Format "2006" }}
+          {{ end }}
+
+          {{ if .Site.Title }}
+          &nbsp;&bull;&nbsp;
+          <a href="{{ "" | absLangURL }}">{{ .Site.Title }}</a>
+          {{ end }}
+        </p>
+        <!-- Please don't remove this, keep my open source work credited. -->
+        <p class="credits theme-by text-muted">
+          <!--{{ i18n "poweredBy" . | safeHTML }}-->
+          {{ if $.GitInfo }}&nbsp;&bull;&nbsp;[<a href="{{ .Site.Params.commit }}{{ .GitInfo.Hash }}">{{ substr
+            .GitInfo.Hash 0 8 }}</a>]{{ end }}
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{{- if .Site.Params.selfHosted -}}
+<!--i don't need this lib just for toggle show hide-->
+<!--script src="{{ "vendor/bootstrap/js/bootstrap.bundle.min.js" | absURL }}"></script-->
+{{- else -}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+{{- end }}
+
+
+{{- if .Site.Params.useHLJS }}
+<script src="{{ "js/highlight.min.js" | absURL }}"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function () { $("pre.chroma").css("padding", "0"); }); </script>
+{{- end -}}
+
+{{- if .Site.Params.darkMode }} 
+<!--script src="{{ "js/dark-mode.js" | absURL }}"></script-->
+<script>var toggle=document.getElementById("dark-mode-toggle"),darkTheme=document.getElementById("dark-mode-theme"),systemTheme=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",savedTheme=localStorage.getItem("dark-mode-storage")||systemTheme;function setTheme(e){"dark"===e?(darkTheme.disabled=!1,toggle.className="bi bi-sun"):"light"===e&&(darkTheme.disabled=!0,toggle.className="bi bi-moon-stars")}setTheme(savedTheme),toggle.addEventListener("click",()=>{"bi bi-moon-stars"===toggle.className?(setTheme("dark"),localStorage.setItem("dark-mode-storage","dark")):"bi bi-sun"===toggle.className&&(setTheme("light"),localStorage.setItem("dark-mode-storage","light"))}),window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",e=>{e.matches?setTheme("dark"):setTheme("light")});</script>
+{{- end -}}
+
+{{- partial "footer_custom.html" . }}
+
+
+<!-- Your custom JavaScript for navbar toggle -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the navbar toggle button and the navbar itself
+    var navbarToggleBtn = document.querySelector('.navbar-toggler'); //getElementById('navbarToggleBtn');
+    var navbarNav = document.getElementById('navbarNav');
+
+    // Add click event listener to the toggle button
+    navbarToggleBtn.addEventListener('click', function () {
+      // Toggle the 'show' class on the navbar
+      navbarNav.classList.toggle('show');
+    });
+  });
+</script>
+
+<!--for bootstrap accordians-->
+<script>
+    (function() {
+        'use strict';
+
+        var accordionTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="collapse"]'));
+        accordionTriggerList.forEach(function(accordionTrigger) {
+            accordionTrigger.addEventListener('click', function(event) {
+                event.preventDefault();
+                var targetId = accordionTrigger.getAttribute('data-bs-target') || accordionTrigger.getAttribute('href');
+                var targetElement = document.querySelector(targetId);
+
+                if (!targetElement) return;
+
+                var isActive = targetElement.classList.contains('show');
+
+                // Close all accordions in the same group
+                var parent = targetElement.closest('.accordion');
+                if (parent) {
+                    var allAccordions = parent.querySelectorAll('.collapse.show');
+                    allAccordions.forEach(function(openAccordion) {
+                        openAccordion.classList.remove('show');
+                        openAccordion.style.height = '0px';
+                    });
+                }
+
+                // Toggle the clicked accordion
+                if (!isActive) {
+                    targetElement.classList.add('show');
+                    targetElement.style.height = targetElement.scrollHeight + 'px';
+                } else {
+                    targetElement.classList.remove('show');
+                    targetElement.style.height = '0px';
+                }
+            });
+        });
+
+        // Ensure accordions have the correct initial state
+        var collapseElements = [].slice.call(document.querySelectorAll('.collapse'));
+        collapseElements.forEach(function(collapseElement) {
+            if (collapseElement.classList.contains('show')) {
+                collapseElement.style.height = collapseElement.scrollHeight + 'px';
+            } else {
+                collapseElement.style.height = '0px';
+            }
+        });
+    })();
+</script>
+
